@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="guestbook">
+	 <sql id="search">
+    	<choose>
+	         <when test="search_option == 'name_email_content' ">
+	            and (name like '%' || #{search_data} || '%' or
+	               email like '%' || #{search_data} || '%' or
+	               content like '%' || #{search_data} || '%')
+	         </when>
+	         <when test="search_option != null and search_option != '' and search_data != null and search_data != '' ">
+	            and (${search_option} like '%' || #{search_data} || '%')      
+	         </when>
+	         <otherwise>
+	            and no > '0'
+	         </otherwise>
+      </choose>
+    </sql>
+	<select id="getTotalRecord" resultType="int">
+      select count(*) from guestbook where 1=1
+        <include refid="search"></include>
+   </select>
+   
+   <select id="getList" resultType="guestbook.model.dto.GuestbookDTO">
+      select * from (select A.*, Rownum Rnum from (
+ 			select * from guestbook where 1=1 
+ 				 <include refid="search"></include>
+ 			order by no desc   
+ 	<![CDATA[  
+       ) A) where Rnum >= #{startRecord} and Rnum <= #{lastRecord}
+     ]]>
+   </select>
+    <insert id="setInsert">
+    	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+    		select seq_guestbook.nextval from dual
+    	</selectKey>
+    
+    
+    	insert into guestbook values(#{no},#{dto.name},#{dto.email},#{dto.passwd},#{dto.content},current_timestamp)
+    </insert>
+    <select id="getOne" resultType="guestbook.model.dto.GuestbookDTO">
+    	select * from guestbook where no = #{no} 
+    	
+    </select>
+   <!--  <select id="setSujung" resultType="int">
+    	update member set name=#{name}, gender=#{gender}, bornYear=#{bornYear},postcode=#{postcode},address=#{address},detailAddress=#{detailAddress},extraAddress=#{extraAddress}, lastupDate=current_timestamp where id=#{id} and passwd=#{passwd}
+    </select> -->
+    <update id="setSujung">
+    	update guestbook set name=#{dto.name}, email=#{dto.email}, content=#{dto.content} where no=#{dto.no} and passwd=#{dto.passwd}
+    </update>
+    <!--  <select id="setSakjae" resultType="int">
+    	delete from ${table_1} where id=#{id} and passwd=#{passwd}
+    </select> -->
+    <delete id="setSakjae">
+    	delete from guestbook where no=#{dto.no} and passwd=#{dto.passwd}
+    </delete>
+</mapper>

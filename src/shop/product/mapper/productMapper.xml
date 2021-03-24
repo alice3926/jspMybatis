@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+	 <sql id="search">
+    	<choose>
+	         <when test="search_option == 'name+description' ">
+	            and (name like '%' || #{search_data} || '%' or
+	               description like '%' || #{search_data} || '%')
+	         </when>
+	         <when test="search_option != null and search_option != '' and search_data != null and search_data != '' ">
+	            and (${search_option} like '%' || #{search_data} || '%')      
+	         </when>
+	         <otherwise>
+	         </otherwise>
+      </choose>
+    </sql>
+	<select id="getTotalRecord" resultType="int">
+      select count(*) from product where no>0
+        <include refid="search"></include>
+   </select>
+   
+   <select id="getList" resultType="shop.product.model.dto.ProductDTO">
+      select * from (select A.*, Rownum Rnum from (
+ 			select t1.*,(select nvl(sum(amount),0) from cart t2 where t2.productNo = t1.no) buy_counter from product t1 where no > 0
+ 				 <include refid="search"></include>
+ 			order by no desc   
+ 	<![CDATA[  
+       ) A) where Rnum >= #{startRecord} and Rnum <= #{lastRecord} 
+     ]]>
+   </select>
+   
+    <insert id="setInsert">
+    	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+    		select seq_product.nextval from dual
+    	</selectKey>
+    	
+    
+    	insert into product values(#{no},#{dto.id},#{dto.passwd},#{dto.name},#{dto.gender},#{dto.bornYear},current_timestamp,#{dto.postcode},#{dto.address},#{dto.detailAddress},#{dto.extraAddress},current_timestamp)
+    </insert>
+
+    <select id="getView" resultType="shop.product.model.dto.ProductDTO">
+    	select * from (select b.*,  LAG(no) over (order by no asc) preNo,  LAG(name) over (order by no asc) preName,  
+    								LEAD(no) over (order by no asc) nxtNo,  LEAD(name) over (order by no asc) nxtName 
+    									from product b order by no asc ) where no = #{no}
+    </select>
+    <update id="setUpdate">
+		update product set name=#{dto.name}, price=#{dto.price}, description=#{dto.description}, product_img=#{dto.product_img} where no=#{dto.no}
+    </update>
+
+    <delete id="setDelete">
+    	delete from product where no=#{dto.no}
+    </delete>
+</mapper>

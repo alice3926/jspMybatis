@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+	 <sql id="search">
+    	<choose>
+	         <when test="search_option == 'id_name_gender' ">
+	            and (id like '%' || #{search_data} || '%' or
+	               name like '%' || #{search_data} || '%' or
+	               gender like '%' || #{search_data} || '%')
+	         </when>
+	         <when test="search_option != null and search_option != '' and search_data != null and search_data != '' ">
+	            and (${search_option} like '%' || #{search_data} || '%')      
+	         </when>
+	         <otherwise>
+	            and no > '0'
+	         </otherwise>
+      </choose>
+    </sql>
+	<select id="getTotalRecord" resultType="int">
+      select count(*) from ${table_1} where 1=1
+        <include refid="search"></include>
+   </select>
+   
+   <select id="getList" resultType="member.model.dto.MemberDTO">
+      select * from (select A.*, Rownum Rnum from (
+ 			select * from member where 1=1 
+ 				 <include refid="search"></include>
+ 			order by no desc   
+ 	<![CDATA[  
+       ) A) where Rnum >= #{startRecord} and Rnum <= #{lastRecord}
+     ]]>
+   </select>
+   
+    <select id="getIdCheck" resultType="int">
+    	select count(*) from member where id = #{id}
+    </select>
+    <select id="getIdCheckWin" resultType="String">
+    	select id from member where id = #{id}
+    </select>
+  <!--   <select id="setInsert" resultType="int">
+    	insert into ${table_1} values(seq_member.nextval,#{id},#{passwd},#{name},#{gender},#{bornYear},current_timestamp,#{postcode},#{address},#{detailAddress},#{extraAddress},current_timestamp)
+    </select> -->
+    <insert id="setInsert">
+    	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+    		select seq_member.nextval from dual
+    	</selectKey>
+    
+    
+    	insert into member values(#{no},#{dto.id},#{dto.passwd},#{dto.name},#{dto.gender},#{dto.bornYear},current_timestamp,#{dto.postcode},#{dto.address},#{dto.detailAddress},#{dto.extraAddress},current_timestamp)
+    </insert>
+    <select id="setlogin" resultType="member.model.dto.MemberDTO">
+    	select no,id,passwd,name from member where id=#{id} and passwd=#{passwd}
+    </select>
+    <select id="getOne" resultType="member.model.dto.MemberDTO">
+    	select * from 
+    		(
+    			select m.*,
+    			LAG(no) OVER(ORDER BY no desc) preNo,
+    			LAG(id) OVER(ORDER BY no desc) preId,
+    			LEAD(no) OVER(ORDER BY no desc) nxtNo,
+    			LEAD(id) OVER(ORDER BY no desc) nxtId
+    			from member m where 1=1
+    			
+    				<include refid="search"></include>
+    			 
+    			order by no desc
+    		
+    		) where no = #{no} 
+    	
+    </select>
+   <!--  <select id="setSujung" resultType="int">
+    	update member set name=#{name}, gender=#{gender}, bornYear=#{bornYear},postcode=#{postcode},address=#{address},detailAddress=#{detailAddress},extraAddress=#{extraAddress}, lastupDate=current_timestamp where id=#{id} and passwd=#{passwd}
+    </select> -->
+    <update id="setSujung">
+    	update member set name=#{dto.name}, gender=#{dto.gender}, bornYear=#{dto.bornYear},postcode=#{dto.postcode},address=#{dto.address},detailAddress=#{dto.detailAddress},extraAddress=#{dto.extraAddress}, lastupDate=current_timestamp where id=#{dto.id} and passwd=#{dto.passwd}
+    </update>
+    <!--  <select id="setSakjae" resultType="int">
+    	delete from ${table_1} where id=#{id} and passwd=#{passwd}
+    </select> -->
+    <delete id="setSakjae">
+    	delete from member where id=#{dto.id} and passwd=#{dto.passwd}
+    </delete>
+</mapper>
