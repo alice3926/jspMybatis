@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mall">
+	 
+	<select id="getTotalRecord" resultType="int">
+      select count(*) from cart
+   </select>
+   
+     
+    <insert id="setInsert">
+    	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+    		select seq_member.nextval from dual
+    	</selectKey>
+    
+    
+    	insert into member values(#{no},#{dto.id},#{dto.passwd},#{dto.name},#{dto.gender},#{dto.bornYear},current_timestamp,#{dto.postcode},#{dto.address},#{dto.detailAddress},#{dto.extraAddress},current_timestamp)
+    </insert>
+   
+   <select id="getList" resultType="shop.mall.model.dto.MallDTO">
+      select * from (select A.*, Rownum Rnum from (
+ 			select c.no, p.no productNo, c.memberNo, p.product_img, p.name,p.price,c.amount,(p.price * c.amount) buy_money, c.regi_date from cart c, product p  where c.productNo = p.no  and c.no > 0 order by c.no desc
+ 	<![CDATA[  
+       ) A) where Rnum >= #{startRecord} and Rnum <= #{lastRecord}
+     ]]>
+   </select>
+   
+   <select id="getListCartProductGroup" resultType="shop.mall.model.dto.CartDTO">
+     select p.name product_name, sum(c.amount * p.price) buy_money 
+				from cart c inner join product p on c.productNo = p.no 
+				group by p.name 
+				order by product_name asc
+   </select>
+   
+   
+   
+
+  
+</mapper>
