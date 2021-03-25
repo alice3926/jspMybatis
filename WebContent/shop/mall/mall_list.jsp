@@ -43,9 +43,9 @@
 			<input type="button" onclick="search();" value="검색">
 <script>
 	function search(){
-		if(confirm('검색 OK?')){
-			suntaek_proc('mall_search','1','');
-		}
+		$("#span_search_option").text($("#search_option").val());
+		$("#span_search_data").text($("#search_data").val());
+		 suntaek_proc('mall_list','1','');
 	}
 </script>
 		</td>

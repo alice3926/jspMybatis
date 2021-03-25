@@ -195,11 +195,22 @@ public class MallController extends HttpServlet {
     	  RequestDispatcher rd = request.getRequestDispatcher(page);
     	  rd.forward(request, response);
     	  
+      }else if (url.contains("cart_sujung.do")) {
+    	  System.out.println("cart_sujung두 들어옴");
+    	  String jumunsu_ = request.getParameter("buy_counter");
+    	  int jumunsu = Integer.parseInt(jumunsu_);
+    	  System.out.println("no,jumunsu"+no+","+jumunsu);
+    	  cartDao.setSujung(no,jumunsu);
+    	  
       }else if (url.contains("cart_clear.do")) {
     	  temp=request.getParameter("chk_no");
     	  String[] array = temp.split(",");
-    	  
-    	  boolean result = cartDao.setDeleteBatch(array);
+    	  for(int i=0; i<array.length; i++) {
+    		  System.out.println(array[i]);
+    	  }
+    	 
+    	 
+    	  cartDao.setDeleteBatch(array);
       }
  
   }

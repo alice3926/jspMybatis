@@ -35,7 +35,7 @@
 			<td style="padding:0px 20px;" id="survey">
 				<a href="${path }/survey_servlet/index.do">설문조사</a>			
 			</td>
-			<td style="padding:0px 20px;" id="qeustionBank">
+			<td style="padding:0px 20px;" id="questionBank">
 				<a href="${path }/survey_servlet/index.do?moveword=questionBank">문제은행</a>			
 			</td>
 			<td style="padding:0px 20px;" id="board">

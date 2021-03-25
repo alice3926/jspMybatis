@@ -48,6 +48,9 @@ function suntaek_proc(value1,value2,value3){
 		}else{
 			return;
 		}
+	}else if(value1 =='cart_sujung'){
+		$("#span_proc").text(value1);
+		$("#span_no").text(value3);
 	}else if(value1 =='cart_clear'){
 		if(confirm('정말 비우시겠습니까?')){
 			$("#span_proc").text(value1);
@@ -83,7 +86,6 @@ function GoPage(value1) {
 		}else if(value1=="mall_view"){
 			param={};
 			param.no = $("#span_no").text();
-// 			param.pageNumber = $("#span_pageNumber").text();
 			param.search_option = $("#span_search_option").text();
 			param.search_data = $("#span_search_data").text();
 		
@@ -91,15 +93,15 @@ function GoPage(value1) {
 			param={};
 			param.no = $("#span_no").text();
 			param.buy_counter = $("#span_jumun_su").text();
-// 			param.pageNumber = $("#span_pageNumber").text();
-// 			param.search_option = $("#span_search_option").text();
-// 			param.search_data = $("#span_search_data").text();
 		}else if(value1=="cart_list"){
 			param={};
 			param.buy_counter = $("#span_jumun_su").text();
  			param.pageNumber = $("#span_pageNumber").text();
-// 			param.search_option = $("#span_search_option").text();
-// 			param.search_data = $("#span_search_data").text();
+		}else if(value1=="cart_sujung"){
+			var no = $("#span_no").text();
+			param={};
+			param.no = $("#span_no").text();
+			param.buy_counter = $("#cart_amount"+no).val();
 		}else if(value1=="cart_clear"){
 			var chk_no = '';
 			$('input[type="checkbox"]:checked').each(function(index){
@@ -119,7 +121,8 @@ function GoPage(value1) {
 		data: param,
 		url: url,
 		success: function(data){ 
-			if (value1=='cart_chuga' || value1 == 'cart_clear') {
+			if (value1=='cart_chuga' || value1 == 'cart_clear' || value1 == 'cart_sujung') {
+				
 				value1 = 'cart_list';
 				suntaek_proc(value1,'1','');
 				

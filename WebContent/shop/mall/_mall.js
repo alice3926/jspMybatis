@@ -22,7 +22,7 @@ function suntaek_proc(value1, value2, value3){
    function suntaek_list(value1) {
       $("#span_list_gubun").text(value1);
       $("#span_pageNumber").text(1);
-       suntaek_proc('list','1','');
+       suntaek_proc('mall_list','1','');
    }
 
 

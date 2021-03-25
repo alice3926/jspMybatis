@@ -103,7 +103,7 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
      select count(*) from board_comment where board_no = #{board_no} 
    </select>
     <update id="setCommmentUpdate">
-    	update board_comment set  writer=#{dto.writer}, content=#{dto.content} where comment_no=#{dto.comment_no} and passwd=#{dto.passwd}
+    	update board_comment set  writer=#{dto.writer}, content=#{dto.content}, ip=#{dto.ip} where comment_no=#{dto.comment_no} and passwd=#{dto.passwd}
     </update>
      <delete id="setCommmentDelete">
     	delete from board_comment where comment_no=#{comment_no}

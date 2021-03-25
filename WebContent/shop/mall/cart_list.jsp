@@ -71,7 +71,18 @@
 						<fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.product_price }" />
 					</td>
 					<td>
-						<fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.amount}" />
+						<select name ="cart_amount${dto.no}" id="cart_amount${dto.no}" onchange="suntaek_proc('cart_sujung','','${dto.no}')">
+							<c:forEach var="i" begin="1" end="10" step="1">
+								<c:if test="${dto.amount == i }">			
+									<option value="${i }" selected>${i }</option>
+								</c:if>
+								<c:if test="${dto.amount != i }">			
+									<option value="${i }">${i }</option>
+								</c:if>
+							</c:forEach>
+						</select>
+						
+						
 					</td>
 					<td>
 						<fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.buy_money}" />

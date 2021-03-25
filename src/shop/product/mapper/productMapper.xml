@@ -42,8 +42,8 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
     </insert>
 
     <select id="getView" resultType="shop.product.model.dto.ProductDTO">
-    	select * from (select b.*,  LAG(no) over (order by no asc) preNo,  LAG(name) over (order by no asc) preName,  
-    								LEAD(no) over (order by no asc) nxtNo,  LEAD(name) over (order by no asc) nxtName 
+    	select * from (select b.*,  LAG(no) over (order by no asc) preNo,  LAG(name) over (order by no asc) preSubject,  
+    								LEAD(no) over (order by no asc) nxtNo,  LEAD(name) over (order by no asc) nxtSubject 
     									from product b order by no asc ) where no = #{no}
     </select>
     <update id="setUpdate">

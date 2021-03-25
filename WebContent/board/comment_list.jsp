@@ -6,11 +6,18 @@
 	<tr>
 		<td style="padding:0 0 20 0;">
 			이름 : <input type="text" name="comment_writer" id="comment_writer" size="10" value="${commentDto.writer }"> &nbsp;								
-			비밀번호 : <input type="password" name="comment_passwd" id="comment_passwd" size="40" value="${commentDto.passwd }">
+			비밀번호 : <input type="password" name="comment_passwd" id="comment_passwd" size="40" value="">
 			<br>
 			댓글 : <input type="text"  name="comment_content" id="comment_content" value="${commentDto.content }" size="40">
-			&nbsp;		
-			<button type="button" onclick="comment_proc('commentSave','');">확인</button>		
+			
+				 <span id="spanView2" style="display: none;">
+					<button type="button" onclick="comment_proc('commentSave','');">확인</button>	
+				 </span>
+        		 <span id="spanView" style="display: none;">
+		       		 <button type="button" onclick="comment_proc('commentmodifyProc','')">수정</button>
+		     	</span>
+		        
+		        
 		</td>
 	</tr>
 </table>
@@ -33,6 +40,8 @@
 						<tr>
 							<td>${commentDto.content}</td>
 							<td>
+								<a href="#" onclick="abc('${commentDto.comment_no}','${commentDto.writer}','${commentDto.content}');">[수정]</a>
+								&nbsp;
 								<a href="#" onclick="comment_proc('commentSakjaeProc','${commentDto.comment_no}');">[삭제]</a>
 							</td>
 						</tr>
@@ -78,13 +87,26 @@
  
 <script>
 $(document).ready(function() {
+	$("#spanView").hide();
+	$("#spanView2").show();
+
+	
+	
 	
 	 $("#btnCommentSave").click(function(){
-	      comment_save();   
+		 comment_save();   
 	   });   
 	
 });
 
+function abc(value1, value2, value3) {
+	$("#spanView").show();
+    $("#spanView2").hide();
+    $("#span_commentNo").text(value1);
+    $("#comment_writer").val(value2);
+    $("#comment_content").val(value3);
+    
+ }   
 
 
 </script> 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import db.DbExample;
 import shop.mall.model.dto.CartDTO;
+import shop.product.model.dto.ProductDTO;
 
 public class CartDAO_imsi {
 	Connection conn=null;
@@ -177,4 +178,27 @@ public class CartDAO_imsi {
 			return list;
 	  
 	  }
+	  
+	  
+	  public int setSujung(int no, int jumunsu) {
+			int result=0;
+			conn = getConn();
+			try {
+				String sql = "update cart set amount=? where productNo=?";
+				System.out.println(sql);
+				int k=0;
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(++k,no);
+				pstmt.setInt(++k,jumunsu);
+				pstmt.executeUpdate();
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				getConnClose(rs,pstmt,conn);
+			}
+			return result;	
+		}
+	  
+	  
 }

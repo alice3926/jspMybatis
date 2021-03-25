@@ -26,5 +26,6 @@ PUBLIC "-//mybatis.org//DTO Config 3.0//EN"
 		<mapper resource="board/mapper/boardMapper.xml" />
 		<mapper resource="survey/mapper/surveyMapper.xml" />
 		<mapper resource="shop/product/mapper/productMapper.xml" />
+		<mapper resource="shop/mall/mapper/mallMapper.xml" />
 	</mappers>
 </configuration>

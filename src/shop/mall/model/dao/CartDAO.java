@@ -60,48 +60,14 @@ public class CartDAO {
 			return result;
 		}
 	  
-	  public boolean setDeleteBatch(String[] array ) {
-		  	int[] count = new int[array.length];
-		  	conn=getConn();
-		  	try {
-		  		conn.setAutoCommit(false);  //오토커밋을 끈다
-		  		
-		  		String sql = "delete from cart where no = ?";
-		  		pstmt = conn.prepareStatement(sql);
-		  		
-		  		for(int i=0; i<array.length; i++) {
-		  			if(array[i].equals("on")) {
-		  				continue;
-		  			}
-		  			pstmt.setInt(1, Integer.parseInt(array[i])); 
-		  			pstmt.addBatch(); //반복문이 돌면서 배치파일 실행을 배치를 만듬
-		  		}
-				count = pstmt.executeBatch(); //모아놓은 문장(배치)를 실행. 즉 count가 여러개가 된다. 인텍스 갯수만큼
-				conn.commit();
-			}catch(SQLException e) {
-				try {
-					conn.rollback(); //실패시 롤백해서 그 전 상태로 커밋
-				}catch(SQLException e1) {
-					e1.printStackTrace();
-				}
-			}finally {
-				try {
-					conn.setAutoCommit(true); //오토커밋을 켜준다.
-				}catch(SQLException e2) {
-					e2.printStackTrace();
-				}
-				getConnClose(rs,pstmt,conn);
-			}
-			//리턴 값 -2는 성공은 했지만, 변경된 row의 갯수를 알 수 없을때 리턴되는 값이다
-			boolean result = true;
-			for(int i=0; i<count.length; i++) {
-				System.out.println(i + ". "+ count[i]);
-				if(count[i] != -2) {
-					result = false;
-					break;
-				}
-			}
-			return result;
+	  public void setDeleteBatch(String[] array ) {
+		  	Map<String, Object> map = new HashMap<>();
+		  	map.put("array", array);
+		  	
+		  	SqlSession session = MybatisManager.getInstance().openSession();
+		  	session.delete("mall.setDeleteBatch",map);
+		  	session.commit();
+		  	session.close();
 			
 	  }
 	  public List<CartDTO> getListCartProductGroup(){
@@ -110,4 +76,17 @@ public class CartDAO {
 		  session.close();
 		  return list;
 	  }
+	  
+	  public int setSujung(int no, int jumunsu) {
+		  Map<String, Object> map = new HashMap<>();
+		  map.put("no", no);
+		  map.put("jumunsu", jumunsu);
+		  
+		  SqlSession session = MybatisManager.getInstance().openSession();
+		  int result = session.update("mall.setSujung",map);
+		  session.commit();
+		  session.close();
+		  return result;
+		}
+	  
 }

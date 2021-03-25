@@ -48,32 +48,32 @@
 		
 			<select name="syear" id="syear">
 		<c:forEach var="i" begin="${naljaMap['now_y'] -1}" end="${naljaMap['now_y'] +1}" step="1">
-				<c:if test="${naljaMap['now_y']==i }">			
+				<c:if test="${syear ==i }">			
 				<option value="${i }" selected>${i }</option>
 				</c:if>
-				<c:if test="${naljaMap['now_y']!=i }">			
+				<c:if test="${syear!=i }">			
 				<option value="${i }">${i }</option>
 				</c:if>
 			</c:forEach>
 			</select>년 
 			<select name="smonth" id="smonth">
 			<c:forEach var="i" begin="1" end="12" step="1">
-				<c:if test="${naljaMap['now_m']==i }">
+				<c:if test="${smonth==i }">
 					<c:if test="${i<10 }">			
 				<option value="0${i }" selected>0${i }</option>
 					</c:if>
 				</c:if>
-				<c:if test="${naljaMap['now_m']!=i }">
+				<c:if test="${smonth!=i }">
 					<c:if test="${i<10 }">			
 				<option value="0${i }">0${i }</option>
 					</c:if>
 				</c:if>
-				<c:if test="${naljaMap['now_m']==i }">	
+				<c:if test="${smonth==i }">	
 					<c:if test="${i>=10 }">			
 				<option value="${i }" selected>${i }</option>
 					</c:if>
 				</c:if>
-				<c:if test="${naljaMap['now_m']!=i }">		
+				<c:if test="${smonth!=i }">		
 					<c:if test="${i>=10 }">		
 				<option value="${i }">${i }</option>
 					</c:if>
@@ -82,22 +82,22 @@
 			</select>월 
 			<select name="sday" id="sday">
 			<c:forEach var="i" begin="1" end="31" step="1">
-				<c:if test="${naljaMap['now_d']==i }">
+				<c:if test="${sday==i }">
 					<c:if test="${i<10 }">			
 				<option value="0${i }" selected>0${i }</option>
 					</c:if>
 				</c:if>
-				<c:if test="${naljaMap['now_d']!=i }">
+				<c:if test="${sday!=i }">
 					<c:if test="${i<10 }">			
 				<option value="0${i }">0${i }</option>
 					</c:if>
 				</c:if>
-				<c:if test="${naljaMap['now_d']==i }">	
+				<c:if test="${sday==i }">	
 					<c:if test="${i>=10 }">			
 				<option value="${i }" selected>${i }</option>
 					</c:if>
 				</c:if>
-				<c:if test="${naljaMap['now_d']!=i }">		
+				<c:if test="${sday!=i }">		
 					<c:if test="${i>=10 }">		
 				<option value="${i }">${i }</option>
 					</c:if>
@@ -112,32 +112,32 @@
 		<td>
 			<select name="lyear" id="lyear">
 			<c:forEach var="i" begin="${naljaMap['now_y'] -1}" end="${naljaMap['now_y'] +1}" step="1">
-				<c:if test="${naljaMap['now_y']==i }">			
+				<c:if test="${lyear==i }">			
 				<option value="${i }" selected>${i }</option>
 				</c:if>
-				<c:if test="${naljaMap['now_y']!=i }">			
+				<c:if test="${lyear!=i }">			
 				<option value="${i }">${i }</option>
 				</c:if>
 			</c:forEach>
 			</select>년 
 			<select name="lmonth" id="lmonth">
 			<c:forEach var="i" begin="1" end="12" step="1">
-				<c:if test="${naljaMap['now_m']==i }">
+				<c:if test="${lmonth==i }">
 					<c:if test="${i<10 }">			
 				<option value="0${i }" selected>0${i }</option>
 					</c:if>
 				</c:if>
-				<c:if test="${naljaMap['now_m']!=i }">
+				<c:if test="${lmonth!=i }">
 					<c:if test="${i<10 }">			
 				<option value="0${i }">0${i }</option>
 					</c:if>
 				</c:if>
-				<c:if test="${naljaMap['now_m']==i }">	
+				<c:if test="${lmonth==i }">	
 					<c:if test="${i>=10 }">			
 				<option value="${i }" selected>${i }</option>
 					</c:if>
 				</c:if>
-				<c:if test="${naljaMap['now_m']!=i }">		
+				<c:if test="${lmonth!=i }">		
 					<c:if test="${i>=10 }">		
 				<option value="${i }">${i }</option>
 					</c:if>
@@ -146,22 +146,22 @@
 			</select>월 
 			<select name="lday" id="lday">
 			<c:forEach var="i" begin="1" end="31" step="1">
-				<c:if test="${naljaMap['now_d']==i }">
+				<c:if test="${lday==i }">
 					<c:if test="${i<10 }">			
 				<option value="0${i }" selected>0${i }</option>
 					</c:if>
 				</c:if>
-				<c:if test="${naljaMap['now_d']!=i }">
+				<c:if test="${lday!=i }">
 					<c:if test="${i<10 }">			
 				<option value="0${i }">0${i }</option>
 					</c:if>
 				</c:if>
-				<c:if test="${naljaMap['now_d']==i }">	
+				<c:if test="${lday==i }">	
 					<c:if test="${i>=10 }">			
 				<option value="${i }" selected>${i }</option>
 					</c:if>
 				</c:if>
-				<c:if test="${naljaMap['now_d']!=i }">		
+				<c:if test="${lday!=i }">		
 					<c:if test="${i>=10 }">		
 				<option value="${i }">${i }</option>
 					</c:if>

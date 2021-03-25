@@ -359,8 +359,8 @@ public class BoardController extends HttpServlet {
         	  out.close();
             
             
-         }else if (url.indexOf("commentSujungProc.do") != -1) {
-             System.out.println("commentSujungProc 왔음");
+         }else if (url.indexOf("commentmodifyProc.do") != -1) {
+             System.out.println("commentmodifyProc 왔음");
              String comment_no_ = request.getParameter("commentNo");
              int comment_no = Integer.parseInt(comment_no_);
                      
@@ -370,11 +370,14 @@ public class BoardController extends HttpServlet {
              String writer = request.getParameter("writer");
              String content = request.getParameter("content");
              String passwd = request.getParameter("passwd");
-             System.out.println(comment_no);
+             
+             System.out.println("comment_no"+comment_no);
              System.out.println(board_no);
              System.out.println(writer);
              System.out.println(content);
              System.out.println(passwd+"5개값찍어야 정상");
+             System.out.println(ip);
+   
              
              CommentDTO commentDto = new CommentDTO();
              commentDto.setComment_no(comment_no);
@@ -382,8 +385,9 @@ public class BoardController extends HttpServlet {
              commentDto.setWriter(writer);
              commentDto.setContent(content);
              commentDto.setPasswd(passwd);
-             commentDto.setMemberNo(cookNo);
              commentDto.setIp(ip);
+             
+             
              
              int result = dao.setCommmentUpdate(commentDto);
              PrintWriter out = response.getWriter();

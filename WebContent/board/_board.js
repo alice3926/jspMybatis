@@ -94,6 +94,16 @@ function comment_proc(value1,value2){
 			       "passwd" : $("#comment_passwd").val(),
 			       "content" : $("#comment_content").val()
 			    }
+	}else if(value1 == 'commentmodifyProc'){
+		 
+		 param = {
+				 "no" : $("#span_no").text(),
+			     "commentNo" : $("#span_commentNo").text(),
+				 "writer" : $("#comment_writer").val(),
+			     "passwd" : $("#comment_passwd").val(),
+			     "content" : $("#comment_content").val()
+
+			    }
 	}else if(value1 == 'commentSakjaeProc'){
 		 $("#span_commentNo").text(value2);
 		 
@@ -109,7 +119,12 @@ function comment_proc(value1,value2){
        data: param,
        url: url,
        success: function(data){ //콜백함수 (서버에서 처리가 완료된 후 실행되는 코드)
+		if(value1 == 'commentmodifyProc'){
+			 $("#span_commentNo").text("");
 	         comment_list();
+		}else{
+			  comment_list();
+		}
           
        }
     });
