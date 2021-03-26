@@ -39,7 +39,6 @@ url주소는 : http://localhost:8090/jspStudy/index.do
 			<c:choose>
 				<c:when test="${menu_gubun=='index' }">
 					<jsp:include page="../main/main_sub.jsp"/>
-					
 				</c:when>
 				<c:when test="${menu_gubun=='member_index' }">
 					<jsp:include page="../member/index.jsp"/>
@@ -47,9 +46,9 @@ url주소는 : http://localhost:8090/jspStudy/index.do
 				<c:when test="${menu_gubun=='memo_index' }">
 					<jsp:include page="../memo/index.jsp"/>
 				</c:when>
-				<c:when test="${menu_gubun=='member_login' }">
+			<%-- 	<c:when test="${menu_gubun=='member_login' }">
 					<jsp:include page="../member/login.jsp"/>
-				</c:when>
+				</c:when> --%>
 				<c:when test="${menu_gubun=='member_chuga' }">
 					<jsp:include page="../member/chuga.jsp"/>
 				</c:when>

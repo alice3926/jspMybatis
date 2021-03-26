@@ -35,9 +35,7 @@ function login(){
 }
 function join(){
 	if(confirm('가입페이지로 이동하시겠습니까?')){
-		DirForm.method="post";
-		DirForm.action="${path}/member_servlet/chuga.do";
-		DirForm.submit();
+		location.href="${path }/member_servlet/index.do?word=chuga";
 	}
 }
 </script>

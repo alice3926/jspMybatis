@@ -57,7 +57,7 @@
 	</tr>
 	<tr>
 		<td colspan="2" align="center" style="height:50px;">
-			<button type="button" onclick="GoPage('chugaProc');">JOIN</button>
+			<button type="button" onclick="suntaek_proc('chugaProc','','');">JOIN</button>
 			<button type="button" onclick="suntaek_proc('list','1','');">목록으로</button>		
 		</td>
 	</tr>
@@ -70,14 +70,7 @@
 $(document).ready(function() {
 	$("#writer").focus(); //페이지 준비 되면 바로 입력할수 있도록 커서띄움
 	
-	$("#btnChuga").click(function() {
-		if (confirm('등록하시겠습니까?')) {
-			suntaek_proc('chugaProc','1','');
-		}
-	});
-	$("#btnList").click(function(){
-		suntaek_proc('list','1','');
-	});
+
 	$("#id_check_div").click(function(){
 		id_check_div();
 	});

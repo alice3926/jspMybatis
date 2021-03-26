@@ -157,8 +157,8 @@ public class SurveyController extends HttpServlet {
 			out.flush();
 			out.close();
 
-		} else if (url.indexOf("list.do") != -1 || url.indexOf("list_2.do") != -1) {
-			int pageSize = 20;
+		} else if (url.contains("list.do")|| url.contains("list_2.do")) {
+			int pageSize =10;
 			if (url.indexOf("list_2.do") != -1) {
 				pageSize = 100;
 			}

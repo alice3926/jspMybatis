@@ -3,7 +3,7 @@
 <%@ include file="../include/inc_header.jsp" %>
 <c:if test="${sessionScope.cookNo==null || sessionScope.cookNo==0 }">
 	양양의 홈페이지에 오신것을 환영합니다.<br>
-	<img src="${path }/attach/image/butterBread.jpeg" title="앙버터빵" alt="앙버터빵" width="400px" height="500px">
+	<img src="${path }/attach/image/suc.jpg" title="앙버터빵" alt="앙버터빵" width="80%" height="500px">
 	<!--  chart 넣는것이 면접관들 눈에 보기 좋음 -->
 </c:if>
 <c:if test="${sessionScope.cookNo!=null && sessionScope.cookNo>0 }">
