@@ -41,6 +41,8 @@ public class SurveyController extends HttpServlet {
 	protected void doProc(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 
 		common.Util util = new common.Util();
 
@@ -50,6 +52,18 @@ public class SurveyController extends HttpServlet {
 		naljaMap.put("now_m", nalja[1]);
 		naljaMap.put("now_d", nalja[2]);
 
+		String serverInfo[] = util.getServerInfo(request); // request.getContextPath();
+		String refer = serverInfo[0];
+		String path = serverInfo[1];
+		String url = serverInfo[2];
+		String uri = serverInfo[3];
+		String ip = serverInfo[4];
+		// String ip6 = serverInfo[5];
+		String[] sessionArray = util.sessionCheck(request);
+		int cookNo = Integer.parseInt(sessionArray[0]);
+		String cookId = sessionArray[1];
+		String cookName = sessionArray[2];
+		
 		String temp;
 		temp = request.getParameter("pageNumber");
 		int pageNumber = util.numberCheck(temp, 1);
@@ -85,27 +99,33 @@ public class SurveyController extends HttpServlet {
 		request.setAttribute("search_date_e", search_date_e);
 		request.setAttribute("search_date_check", search_date_check);
 
-		String path = request.getContextPath();
-		String url = request.getRequestURL().toString();
-
 		SurveyDAO dao = new SurveyDAO();
 		SurveyDTO dto = new SurveyDTO();
 
 		String page = "/main/main.jsp";
 
 		if (url.indexOf("index.do") != -1) {
-			String moveword = request.getParameter("moveword");
-
-			if (moveword == null || moveword.equals("")) {
-				request.setAttribute("menu_gubun", "survey_index");
-			} else {
-				request.setAttribute("moveword", moveword);
-				request.setAttribute("menu_gubun", "questionBank_index");
+			if(cookNo>0) {
+					String moveword = request.getParameter("moveword");
+					
+					if (moveword == null || moveword.equals("")) {
+						request.setAttribute("menu_gubun", "survey_index");
+					} else {
+						request.setAttribute("moveword", moveword);
+						request.setAttribute("menu_gubun", "questionBank_index");
+					}
+		
+					RequestDispatcher rd = request.getRequestDispatcher(page);
+					rd.forward(request, response);
+			}else {
+				System.out.println("로그인 안했을때");
+				url=path+"/member_servlet/index.do?word=login";
+				PrintWriter out = response.getWriter();
+		    	out.println("<script>alert('로그인 해주세요');location.href='"+ url+"';</script>");
+		    	out.flush();
+		    	out.close();
 			}
-
-			RequestDispatcher rd = request.getRequestDispatcher(page);
-			rd.forward(request, response);
-
+			
 		} else if (url.indexOf("chuga.do") != -1) {
 			request.setAttribute("menu_gubun", "survey_chuga");
 			page = "/survey/chuga.jsp";

@@ -38,7 +38,10 @@ public class MemoController extends HttpServlet {
 	}
 	protected void doProc(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+
+
 		Util util = new Util();
 		
 		int[] nalja = util.getDateTime();
@@ -81,9 +84,20 @@ public class MemoController extends HttpServlet {
 		
 		String page = "/main/main.jsp";
 		if (url.indexOf("index.do") != -1) {
-			request.setAttribute("menu_gubun", "memo_index");
-			RequestDispatcher rd = request.getRequestDispatcher(page);
-			rd.forward(request, response);
+			if(cookNo>0) {
+				request.setAttribute("menu_gubun", "memo_index");
+				RequestDispatcher rd = request.getRequestDispatcher(page);
+				rd.forward(request, response);
+			}else {
+				System.out.println("로그인 안했을때");
+				url=path+"/member_servlet/index.do?word=login";
+				PrintWriter out = response.getWriter();
+		    	out.println("<script>alert('로그인 해주세요');location.href='"+ url+"';</script>");
+		    	out.flush();
+		    	out.close();
+			
+				
+			}
 			
 		} else if(url.indexOf("insert.do")!=-1) {
 			//request.setAttribute("menu_gubun", "memo_insert");

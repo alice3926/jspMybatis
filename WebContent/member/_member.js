@@ -1,8 +1,27 @@
 var path = $("#span_path").text();
-
+var cookNo = $("#span_cookNo").text();
+var word = $("#span_word").text();
 $(document).ready(function(){
-   //alert('111');
-	suntaek_proc('list','1','');
+	if(cookNo>0){
+		if(word=='login'){
+			suntaek_proc('login','','');
+			//관리자일때
+		}else if(word=="chuga"){
+			suntaek_proc('chuga','','');
+		}else if(word=="sujung"){
+			suntaek_proc('sujung','',cookNo);
+		}else if(word=="sakjae"){
+			suntaek_proc('sakjae','',cookNo);
+		}else{
+			suntaek_proc('list','1','');
+		}
+	}else{
+		if(word=="chuga"){
+			suntaek_proc('chuga','','');
+		}else{
+			suntaek_proc('login','','');
+		}
+	}
 });
 
 
@@ -89,7 +108,7 @@ function GoPage(value1){
 				$("#result").html(data);
 					if ($("#span_passwd").text() == "T"){
 					alert('삭제되었습니다.');
-			 		suntaek_proc('list','1','');
+			 		suntaek_proc('logout','1','');
 			 	}else{
 			 		alert('비밀번호가 다릅니다.');
 			 		suntaek_proc('sakjae','0',$("#span_no").text());

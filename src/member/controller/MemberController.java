@@ -65,7 +65,7 @@ public class MemberController extends HttpServlet {
 		int pageNumber = util.numberCheck(temp, 1);
 
 		temp = request.getParameter("no");
-		System.out.println("no 넘어옴?:" + temp);
+		//System.out.println("no 넘어옴?:" + temp);
 		int no = util.numberCheck(temp, 0);
 
 		String search_option = request.getParameter("search_option");
@@ -95,44 +95,18 @@ public class MemberController extends HttpServlet {
 
 		String page = "/main/main.jsp";
 		if (url.indexOf("index.do") != -1) {
-			System.out.println("인덱스 들어옴");
+			
 			String word = request.getParameter("word");
 			System.out.println(word);
-			if(word==null ||word.length()==0) {
-				request.setAttribute("menu_gubun", "member_index");
-				RequestDispatcher rd = request.getRequestDispatcher(page);
-				rd.forward(request, response);
-			}
-			if(word.equals("login")) {
-				System.out.println("이프 로그인 들어옴");
-				request.setAttribute("menu_gubun", "member_login");
-				RequestDispatcher rd = request.getRequestDispatcher(page);
-				rd.forward(request, response);
-			}else if(word.equals("chuga")) {
-				System.out.println("이프 추가 들어옴");
-				request.setAttribute("menu_gubun", "member_chuga");
-				RequestDispatcher rd = request.getRequestDispatcher(page);
-				rd.forward(request, response);
-			}else if(word.equals("sujung")) {
-				System.out.println("이프 수정 들어옴");
-				String wordNo=request.getParameter("no");
-				request.setAttribute("menu_gubun", "member_sujung");
-				request.setAttribute("no", wordNo);
-				RequestDispatcher rd = request.getRequestDispatcher(page);
-				rd.forward(request, response);
-			}else if(word.equals("sakjae")) {
-				System.out.println("이프 삭제 들어옴");
-				String wordNo=request.getParameter("no");
-				request.setAttribute("menu_gubun", "member_sakjae");
-				request.setAttribute("no", wordNo);
-				RequestDispatcher rd = request.getRequestDispatcher(page);
-				rd.forward(request, response);
+			if (word != null && word.length()>0) {
+				request.setAttribute("word", word);
 			}else {
-				System.out.println("이프 엘스 들어옴");
-				request.setAttribute("menu_gubun", "member_index");
-				RequestDispatcher rd = request.getRequestDispatcher(page);
-				rd.forward(request, response);
+				System.out.println("워드널 들어옴");
 			}
+			
+			request.setAttribute("menu_gubun", "member_index");
+			RequestDispatcher rd = request.getRequestDispatcher(page);
+			rd.forward(request, response);
 			
 		} else if (url.indexOf("list.do") != -1) {
 			int pageSize = 3;
@@ -165,7 +139,7 @@ public class MemberController extends HttpServlet {
 			page = "/member/list.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
-			
+
 		} else if (url.indexOf("chuga.do") != -1) {
 			request.setAttribute("menu_gubun", "member_chuga");
 			page = "/member/chuga.jsp";
@@ -221,17 +195,17 @@ public class MemberController extends HttpServlet {
 			String address = request.getParameter("address");
 			String detailAddress = request.getParameter("detailAddress");
 			String extraAddress = request.getParameter("extraAddress");
-			System.out.println("id:"+id);
-			System.out.println("passwd:"+passwd);
-			System.out.println("passwdChk:"+passwdChk);
-			System.out.println("name:"+name);
-			System.out.println("gender:"+gender);
-			System.out.println("bornYear:"+bornYear);
-			System.out.println("postcode:"+postcode);
-			System.out.println("address:"+address);
-			System.out.println("detailAddress:"+detailAddress);
-			System.out.println("extraAddress:"+extraAddress);
-			
+			System.out.println("id:" + id);
+			System.out.println("passwd:" + passwd);
+			System.out.println("passwdChk:" + passwdChk);
+			System.out.println("name:" + name);
+			System.out.println("gender:" + gender);
+			System.out.println("bornYear:" + bornYear);
+			System.out.println("postcode:" + postcode);
+			System.out.println("address:" + address);
+			System.out.println("detailAddress:" + detailAddress);
+			System.out.println("extraAddress:" + extraAddress);
+
 			dto.setId(id);
 			dto.setPasswd(passwd);
 			dto.setName(name);
@@ -243,16 +217,16 @@ public class MemberController extends HttpServlet {
 			dto.setExtraAddress(extraAddress);
 
 			int result = dao.setInsert(dto);
-			
+
 			PrintWriter out = response.getWriter();
-	    	if(result>0) {
-	    	  out.println("<script>$('#span_passwd').text('T');</script>");
-	    	}else {
-	    	  out.println("<script>$('#span_passwd').text('F');</script>"); 
-	    	}
-	    	out.flush();
-	    	out.close();
-	    	
+			if (result > 0) {
+				out.println("<script>$('#span_passwd').text('T');</script>");
+			} else {
+				out.println("<script>$('#span_passwd').text('F');</script>");
+			}
+			out.flush();
+			out.close();
+
 		} else if (url.indexOf("login.do") != -1) {
 			request.setAttribute("menu_gubun", "member_login");
 
@@ -269,7 +243,7 @@ public class MemberController extends HttpServlet {
 
 			MemberDTO resultDto = dao.setlogin(dto);
 
-			if (resultDto.getNo() == 0) {
+			if (resultDto.getNo() == 0 || resultDto  == null) {
 				temp = path + "/member_servlet/login.do";
 			} else {// 성공
 				HttpSession session = request.getSession();
@@ -306,7 +280,7 @@ public class MemberController extends HttpServlet {
 				out.println("</script>");
 			}
 			System.out.println("no:" + no);
-			dto = dao.getOne(no,search_option,search_data);
+			dto = dao.getOne(no, search_option, search_data);
 			System.out.println("MemberController의 dto id" + dto.getId());
 
 			request.setAttribute("menu_gubun", "member_view");
@@ -317,18 +291,7 @@ public class MemberController extends HttpServlet {
 			rd.forward(request, response);
 
 		} else if (url.indexOf("sujung.do") != -1) {
-			if (no == 0) {
-				response.setContentType("text/html;charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>");
-				out.println("alert('정상적인 접속이 아닙니다..')");
-				out.println("location.href='" + path + "';");
-				out.println("</script>");
-			}
-
-			System.out.println("MemberController의 no" + no);
-
-			dto = dao.getOne(no,search_option,search_data);
+			dto = dao.getOne(no, search_option, search_data);
 
 			request.setAttribute("menu_gubun", "member_sujung");
 			request.setAttribute("dto", dto);
@@ -338,12 +301,7 @@ public class MemberController extends HttpServlet {
 
 		} else if (url.indexOf("sujungProc.do") != -1) {
 			System.out.println("수정프록 들어옴");
-			/*
-			 * if(no==0) { response.setContentType("text/html;charset=utf-8"); PrintWriter
-			 * out = response.getWriter(); out.println("<script>");
-			 * out.println("alert('정상적인 접속이 아닙니다..')");
-			 * out.println("location.href='"+path+"';"); out.println("</script>"); }
-			 */
+		
 			String id = request.getParameter("id");
 			String passwd = request.getParameter("passwd");
 			String name = request.getParameter("name");
@@ -368,17 +326,16 @@ public class MemberController extends HttpServlet {
 			dto.setExtraAddress(extraAddress);
 
 			int result = dao.setSujung(dto);
-			
-          PrintWriter out = response.getWriter();
-    	  if(result>0) {
-    		  out.println("<script>$('#span_passwd').text('T');</script>");
-    	  }else {
-    		  out.println("<script>$('#span_passwd').text('F');</script>"); 
-    	  }
-    	  out.flush();
-    	  out.close();
-	          
-			
+
+			PrintWriter out = response.getWriter();
+			if (result > 0) {
+				out.println("<script>$('#span_passwd').text('T');</script>");
+			} else {
+				String msg="비밀번호 틀림";
+				out.println("<script>$('#span_passwd').text('"+msg+"');</script>");
+			}
+			out.flush();
+			out.close();
 
 		} else if (url.indexOf("sakjae.do") != -1) {
 //			String no_ = request.getParameter("no");
@@ -404,7 +361,7 @@ public class MemberController extends HttpServlet {
 //				out.println("</script>");
 //			}else {
 //			
-			dto = dao.getOne(no,search_option,search_data);
+			dto = dao.getOne(no, search_option, search_data);
 
 			request.setAttribute("menu_gubun", "member_sakjae");
 			request.setAttribute("dto", dto);
@@ -412,7 +369,7 @@ public class MemberController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 			// }
-			
+
 		} else if (url.indexOf("sakjaeProc.do") != -1) {
 
 			String id = request.getParameter("id");
@@ -424,22 +381,15 @@ public class MemberController extends HttpServlet {
 			dto.setPasswd(passwd);
 
 			int result = dao.setSakjae(dto);
-			
-			
-          PrintWriter out = response.getWriter();
-    	  if(result>0) {
-    		  out.println("<script>$('#span_passwd').text('T');</script>");
-    	  }else {
-    		  out.println("<script>$('#span_passwd').text('F');</script>"); 
-    	  }
-    	  out.flush();
-    	  out.close();
-	          
-			
-			
-			
-			
-			
+
+			PrintWriter out = response.getWriter();
+			if (result > 0) {
+				out.println("<script>$('#span_passwd').text('T');</script>");
+			} else {
+				out.println("<script>$('#span_passwd').text('F');</script>");
+			}
+			out.flush();
+			out.close();
 
 		}
 

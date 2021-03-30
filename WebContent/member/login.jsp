@@ -5,7 +5,7 @@
 <form name="DirForm">
 <table border="1" align="center" width="80%">
 	<tr>
-		<td colspan="2"><h2>회원가입</h2></td>
+		<td colspan="2"><h2>로그인</h2></td>
 	</tr>
 	<tr>
 		<td width="150">아이디</td>
@@ -35,9 +35,7 @@ function login(){
 }
 function join(){
 	if(confirm('가입페이지로 이동하시겠습니까?')){
-		DirForm.method="post";
-		DirForm.action="${path}/member_servlet/chuga.do";
-		DirForm.submit();
+		location.href="${path}/member_servlet/index.do?word=chuga";
 	}
 }
 </script>
