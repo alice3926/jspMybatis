@@ -1,31 +1,10 @@
 var path = $("#span_path").text();
-var value_;
+
 $(document).ready(function(){
    //alert('111');
-console.log(value_);
-if(value_=="chuga"){
-	suntaek_proc('chuga','1','');
-}else if (value_=="sujung"){
-	suntaek_proc('sujung','1','');
-}else{
 	suntaek_proc('list','1','');
-}
 });
 
-function getgujun(value1){
-	console.log('getValue in');
-	value_ = value1;
-	console.log(value_);
-	if(value_=='login'){
-		suntaek_proc('login','','');
-	}else if(value_=='chuga'){
-		suntaek_proc('chuga','','');
-	}else{
-		suntaek_proc('list','','');
-	}
-	
-	
-}
 
 function suntaek_proc(value1, value2, value3){
    $("#span_proc").text(value1);

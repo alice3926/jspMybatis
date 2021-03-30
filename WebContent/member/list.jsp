@@ -2,10 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/inc_header.jsp" %>
 
-총 레코드 수는 ${totalRecord }입니다.
+리스트 사이즈는 ${list.size() }입니다.
+total record 는 ${totalRecord }입니다.
 
 
-<table border="1" align="center" width="100%">
+<table border="1" align="center" width="80%">
 	<tr>
 		<td colspan="15"><h2>회원목록</h2></td>
 	</tr>
@@ -56,9 +57,11 @@
 			<input type="button" onclick="search();" value="검색">
 			<script>
 				function search(){
+					if(confirm('검색 OK?')){
 						$("#span_search_option").text($("#search_option").val());
 						$("#span_search_data").text($("#search_data").val());
 						suntaek_page('1');
+					}
 				}
 			</script>
 		</td>
@@ -103,7 +106,7 @@
 			<a href="#" onclick="suntaek_proc('${value1}','1','');">[첫페이지]</a>
 			&nbsp;&nbsp;
 			<c:if test="${startPage > blockSize }">
-				<a href="#" onclick="suntaek_proc('${value1}','${startPage-blockSize}','');">[이전5개]</a>
+				<a href="#" onclick="suntaek_proc('${value1}','${startPage-blockSize}','');">[이전10개]</a>
 			</c:if>
 			<c:if test="${startPage <=blockSize }">
 			[이전10개]
@@ -119,7 +122,7 @@
 			</c:forEach>		
 			&nbsp;
 			<c:if test="${lastPage<totalPage }">
-				<a href="#" onclick="suntaek_proc('${value1}','${startPage+blockSize}','');">[다음5개]</a>
+				<a href="#" onclick="suntaek_proc('${value1}','${startPage+blockSize}','');">[다음10개]</a>
 			</c:if>
 			<c:if test="${lastPage >=totalPage }">
 				[다음10개]
@@ -132,7 +135,11 @@
 	<tr>
 		<td colspan="15" align="right" style="height:50px;">
 			<button type="button" onclick="suntaek_all();">전체목록</button>
-			<button type="button" onclick="suntaek_proc('chuga','1','');">가입하기</button>
+			<c:if test="cookNo==null || cookNo=='0'">
+				<button type="button" onclick="suntaek_proc('chuga','1','');">가입하기</button>
+			</c:if>
+			
+			
 			
 		</td>
 	</tr>

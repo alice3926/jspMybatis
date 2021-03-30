@@ -19,11 +19,3 @@ path : <span id="span_path">${path }</span><br>
 
 
 <script type="text/javascript" src="${path }/member/_member.js"></script>
-<script>
-$(document).ready(function(){
-	alert('${word}cc');
-	var gujun='${word}';
-	getgujun(gujun);
-	
-});
-</script>

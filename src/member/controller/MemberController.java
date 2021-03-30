@@ -98,14 +98,44 @@ public class MemberController extends HttpServlet {
 			System.out.println("인덱스 들어옴");
 			String word = request.getParameter("word");
 			System.out.println(word);
-			request.setAttribute("menu_gubun", "member_index");
-			request.setAttribute("word", word);
-			RequestDispatcher rd_ = request.getRequestDispatcher(page);
-			rd_.forward(request, response);
-			
+			if(word==null ||word.length()==0) {
+				request.setAttribute("menu_gubun", "member_index");
+				RequestDispatcher rd = request.getRequestDispatcher(page);
+				rd.forward(request, response);
+			}
+			if(word.equals("login")) {
+				System.out.println("이프 로그인 들어옴");
+				request.setAttribute("menu_gubun", "member_login");
+				RequestDispatcher rd = request.getRequestDispatcher(page);
+				rd.forward(request, response);
+			}else if(word.equals("chuga")) {
+				System.out.println("이프 추가 들어옴");
+				request.setAttribute("menu_gubun", "member_chuga");
+				RequestDispatcher rd = request.getRequestDispatcher(page);
+				rd.forward(request, response);
+			}else if(word.equals("sujung")) {
+				System.out.println("이프 수정 들어옴");
+				String wordNo=request.getParameter("no");
+				request.setAttribute("menu_gubun", "member_sujung");
+				request.setAttribute("no", wordNo);
+				RequestDispatcher rd = request.getRequestDispatcher(page);
+				rd.forward(request, response);
+			}else if(word.equals("sakjae")) {
+				System.out.println("이프 삭제 들어옴");
+				String wordNo=request.getParameter("no");
+				request.setAttribute("menu_gubun", "member_sakjae");
+				request.setAttribute("no", wordNo);
+				RequestDispatcher rd = request.getRequestDispatcher(page);
+				rd.forward(request, response);
+			}else {
+				System.out.println("이프 엘스 들어옴");
+				request.setAttribute("menu_gubun", "member_index");
+				RequestDispatcher rd = request.getRequestDispatcher(page);
+				rd.forward(request, response);
+			}
 			
 		} else if (url.indexOf("list.do") != -1) {
-			int pageSize = 5;
+			int pageSize = 3;
 			int blockSize = 10;
 			int totalRecord = dao.getTotalRecord(search_option, search_data);
 			int[] pageArray = util.pager(pageSize, blockSize, totalRecord, pageNumber);
@@ -180,8 +210,6 @@ public class MemberController extends HttpServlet {
 			out.close();
 
 		} else if (url.indexOf("chugaProc.do") != -1) {
-			System.out.println("추가프록 들어옴");
-			
 			String id = request.getParameter("id");
 			String passwd = request.getParameter("passwd");
 			String passwdChk = request.getParameter("passwdChk");
