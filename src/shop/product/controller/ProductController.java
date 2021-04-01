@@ -410,6 +410,7 @@ public class ProductController extends HttpServlet {
 	dto.setName(name);
 	dto.setPrice(price);
 	dto.setDescription(description);
+	dto.setMemberNo(cookNo);
 	//---------------------여기까지는 추가 수정 공통
 	int result;
 	if(url.indexOf("chugaProc.do")!=-1) {

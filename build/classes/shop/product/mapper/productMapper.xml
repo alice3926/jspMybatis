@@ -36,9 +36,8 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
     	<selectKey keyProperty="no" resultType="int" order="BEFORE">
     		select seq_product.nextval from dual
     	</selectKey>
-    	
     
-    	insert into product values(#{no},#{dto.id},#{dto.passwd},#{dto.name},#{dto.gender},#{dto.bornYear},current_timestamp,#{dto.postcode},#{dto.address},#{dto.detailAddress},#{dto.extraAddress},current_timestamp)
+    	insert into product values(#{no},#{dto.name},#{dto.price},#{dto.description},#{dto.product_img},current_timestamp,#{dto.memberNo})
     </insert>
 
     <select id="getView" resultType="shop.product.model.dto.ProductDTO">

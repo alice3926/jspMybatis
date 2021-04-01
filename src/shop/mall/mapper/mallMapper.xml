@@ -12,16 +12,17 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
      
     <insert id="setInsert">
     	<selectKey keyProperty="no" resultType="int" order="BEFORE">
-    		select seq_member.nextval from dual
+    		select seq_cart.nextval from dual
     	</selectKey>
     
     
-    	insert into member values(#{no},#{dto.id},#{dto.passwd},#{dto.name},#{dto.gender},#{dto.bornYear},current_timestamp,#{dto.postcode},#{dto.address},#{dto.detailAddress},#{dto.extraAddress},current_timestamp)
+    	insert into cart values(#{no},#{dto.memberNo},#{dto.productNo},#{dto.amount},current_timestamp)
     </insert>
    
    <select id="getList" resultType="shop.mall.model.dto.CartDTO">
       select * from (select A.*, Rownum Rnum from (
- 			select c.no, p.no productNo, c.memberNo, p.product_img, p.name product_name, p.price product_price,c.amount,(p.price * c.amount) buy_money, c.regi_date from cart c, product p  where c.productNo = p.no  and c.no > 0 order by c.no desc
+ 			select c.no, p.no productNo, c.memberNo, p.product_img, p.name product_name, p.price product_price,c.amount,(p.price * c.amount) buy_money, 
+ 			c.regi_date from cart c, product p  where c.productNo = p.no  and c.memberNo=#{dto.memberNo} order by c.no desc
  	<![CDATA[  
        ) A) where Rnum >= #{startRecord} and Rnum <= #{lastRecord}
      ]]>

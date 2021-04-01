@@ -60,7 +60,7 @@ function GoPage(value1){
 				$("#result").html(data);
 				if ($("#span_passwd").text() == "T"){
 					alert('추가되었습니다.');
-			 		suntaek_proc('list','1','');
+					suntaek_all();
 			 	}else{
 			 		alert('추가실패.');
 			 		suntaek_proc('chuga','0','');
@@ -69,7 +69,7 @@ function GoPage(value1){
 				$("#result").html(data);
 					if ($("#span_passwd").text() == "T"){
 					alert('삭제되었습니다.');
-			 		suntaek_all();
+			 		suntaek_proc('list','1','');
 			 	}else{
 			 		alert('비밀번호가 다릅니다.');
 			 		suntaek_proc('sakjae','0',$("#span_no").text());
@@ -99,6 +99,7 @@ function suntaek_page(value1){
 	GoPage('list');
 }
 function suntaek_all(){
+	console.log('aaa');
 	$("#span_search_option").text("");
 	$("#span_search_data").text("");
 	suntaek_proc('list','1','');

@@ -10,14 +10,46 @@
 
 <h1>방명록 목록</h1>
 <select id="search_option" name="search_option">
-	<option value="">선택</option>
-	<option value="name">이름</option>
-	<option value="email">이메일</option>
-	<option value="content">내용</option>
-	<option value="name_email_content">이름+이메일+내용</option>
+	<c:choose>
+		<c:when test="${search_option == 'name' }">
+			<option value="">선택</option>
+			<option value="name" selected>이름</option>
+			<option value="email">이메일</option>
+			<option value="content">내용</option>
+			<option value="name_email_content">이름+이메일+내용</option>
+		</c:when>
+		<c:when test="${search_option == 'email' }">
+			<option value="">선택</option>
+			<option value="name">이름</option>
+			<option value="email" selected>이메일</option>
+			<option value="content">내용</option>
+			<option value="name_email_content">이름+이메일+내용</option>
+		</c:when>
+		<c:when test="${search_option == 'content' }">
+			<option value="">선택</option>
+			<option value="name">이름</option>
+			<option value="email">이메일</option>
+			<option value="content" selected>내용</option>
+			<option value="name_email_content">이름+이메일+내용</option>
+		</c:when>
+		<c:when test="${search_option == 'name_email_content' }">
+			<option value="">선택</option>
+			<option value="name">이름</option>
+			<option value="email">이메일</option>
+			<option value="content" selected>내용</option>
+			<option value="name_email_content">이름+이메일+내용</option>
+		</c:when>
+		<c:otherwise>
+			<option value="" selected>선택</option>
+			<option value="name">이름</option>
+			<option value="email">이메일</option>
+			<option value="content">내용</option>
+			<option value="name_email_content">이름+이메일+내용</option>
+		</c:otherwise>
+	</c:choose>
 </select>
 &nbsp;
-<input type="text" name="search_data" id="search_data" value="">
+<input type="text" name="search_data" id="search_data" value="${search_data }">
 <button type="button" onclick="search()">검색</button>
 
 <script>

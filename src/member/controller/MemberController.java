@@ -39,7 +39,8 @@ public class MemberController extends HttpServlet {
 	protected void doProc(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-
+		response.setContentType("text/html;charset=utf-8");
+		
 		memberUtil util = new memberUtil();
 
 		int[] nalja = util.getDateTime();
@@ -263,7 +264,7 @@ public class MemberController extends HttpServlet {
 			temp = path;
 			// response.sendRedirect(temp);
 
-			response.setContentType("text/html;charset=utf-8");
+			
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('로그아웃되었습니다.\\n즐거운하루되세요.')");
@@ -272,24 +273,33 @@ public class MemberController extends HttpServlet {
 
 		} else if (url.indexOf("view.do") != -1) {
 			if (no == 0) {
-				response.setContentType("text/html;charset=utf-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>");
 				out.println("alert('정상적인 접속이 아닙니다..')");
 				out.println("history.back();");
 				out.println("</script>");
 			}
-			System.out.println("no:" + no);
-			dto = dao.getOne(no, search_option, search_data);
-			System.out.println("MemberController의 dto id" + dto.getId());
-
-			request.setAttribute("menu_gubun", "member_view");
-			request.setAttribute("dto", dto);
-
-			page = "/member/view.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(page);
-			rd.forward(request, response);
-
+			
+			if (cookNo != no) {
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('본인의 상세정보만 접근할 수 있습니다.')");
+				temp = path+"/member_servlet/index.do?word=list";
+				out.println("location.href='" + temp + "';");
+				out.println("</script>");
+			}
+			if (cookNo == no || cookNo == 51) {
+				//System.out.println("no:" + no);
+				dto = dao.getOne(no, search_option, search_data);
+				//System.out.println("MemberController의 dto id" + dto.getId());
+	
+				request.setAttribute("menu_gubun", "member_view");
+				request.setAttribute("dto", dto);
+	
+				page = "/member/view.jsp";
+				RequestDispatcher rd = request.getRequestDispatcher(page);
+				rd.forward(request, response);
+			}
 		} else if (url.indexOf("sujung.do") != -1) {
 			dto = dao.getOne(no, search_option, search_data);
 

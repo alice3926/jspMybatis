@@ -58,7 +58,7 @@ function GoPage(value1 , value2) {
 		url: url,
 		success: function(data){ 
 			if(value1=="chugaProc"){
-				suntaek_page('1');
+				suntaek_all();
 			}else if(value1=="sujungProc"){
 				$("#result").html(data);
 				
@@ -81,7 +81,7 @@ function GoPage(value1 , value2) {
 function suntaek_page(value1){
 	$("#span_pageNumber").text(value1);
 	$("#span_no").text("");
-	GoPage('list');
+	GoPage('list','');
 }
 //comment
 function comment_proc(value1,value2){
@@ -134,3 +134,9 @@ function comment_proc(value1,value2){
     $("#span_commentPageNumber").text(value1);
     comment_list();
  }
+
+function suntaek_all(){
+	$("#span_search_option").text("");
+	$("#span_search_data").text("");
+	GoPage('list','');
+}

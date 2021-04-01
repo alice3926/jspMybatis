@@ -117,7 +117,7 @@ public class guestbookController extends HttpServlet {
 			System.out.println("4");
 			PrintWriter out = response.getWriter();
 			if(result>0) {
-		    	  out.println("<script>$('#span_passwd').text('T');</script>");
+		    	  out.println("<script>$('#span_passwd').text('T');$('#span_search_option').text('');$('#span_search_data').text('');</script>");
 		    	}else {
 		    	  out.println("<script>$('#span_passwd').text('F');</script>"); 
 		    	}

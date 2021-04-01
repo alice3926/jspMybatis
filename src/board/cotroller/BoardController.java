@@ -240,54 +240,29 @@ public class BoardController extends HttpServlet {
     	  
       }else if (url.indexOf("view.do") != -1) {
     	  System.out.println("들어옴");
-    	  dao.setUpdatHit(no);
-    	  dto = dao.getView(no);
-    	  
-    	  String imsiPage = "viewPage";
-    	  if(dto.getSecretGubun().equals("T")) {//비밀글이면
-    		  String view_passwd = util.nullCheck(request.getParameter("view_passwd"));
-    		  if(dto.getPasswd().equals(view_passwd) && !dto.getPasswd().equals("")) {
-    			  
-    		  }else {
-    			  imsiPage = "viewPasswdPage";
-    		  }
-    	  }
-//    	  //여기부터 코멘트 페이징 처리 관련
-//    	  
-//    	  int pageSize=5;
-//    	  int blockSize=5;
-//    	  int commentTotalRecord = dao.commentTotalRecord(no);
-//    	  int[] pagerArray = util.pager(pageSize, blockSize, commentTotalRecord, commentPageNumber);
-//    	  int jj = pagerArray[0];
-//    	  int startRecord = pagerArray[1];
-//    	  int lastRecord = pagerArray[2];
-//    	  int totalPage = pagerArray[3];
-//    	  int startPage = pagerArray[4];
-//    	  int lastPage = pagerArray[5];
-//    	  
-//    	  
-//    	  
-//    	  System.out.println(commentPageNumber+"view코멘트페이지넘버");
-//    	  
-//    	  ArrayList<CommentDTO> commentList =dao.getCommentList(no, startRecord, lastRecord);
-//    	  
-//    	  request.setAttribute("commentList",commentList);
-//    	 
-//    	  request.setAttribute("commentPageNumber",commentPageNumber );
-//    	  request.setAttribute("pageSize",pageSize);
-//    	  request.setAttribute("blockSize",blockSize);
-//    	  request.setAttribute("commentTotalRecord",commentTotalRecord);
-//    	  request.setAttribute("jj",jj);
-//     	 
-//    	  
-//    	  request.setAttribute("startRecord",startRecord);
-//    	  request.setAttribute("lastRecord",lastRecord);
-//     	 
-//    	  request.setAttribute("totalPage",totalPage);
-//    	  request.setAttribute("startPage",startPage);
-//    	  request.setAttribute("lastPage",lastPage);
-//    	  //여기까지 코멘트 페이징 처리 관련	  
-    	  
+
+		if(cookNo == 0) {
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인 후 이용하세요.')");
+			temp = path+"/member_servlet/index.do?word=login";
+			out.println("location.href='"+temp+"';");
+			out.println("</script>");
+		}else {
+	    	  dao.setUpdatHit(no);
+	    	  dto = dao.getView(no);
+	    	  
+	    	  String imsiPage = "viewPage";
+	    	  if(dto.getSecretGubun().equals("T")) {//비밀글이면
+	    		  String view_passwd = util.nullCheck(request.getParameter("view_passwd"));
+	    		  if(dto.getPasswd().equals(view_passwd) && !dto.getPasswd().equals("")) {
+	    			  
+	    		  }else {
+	    			  imsiPage = "viewPasswdPage";
+	    		  }
+	    	  }
+
     	  request.setAttribute("menu_gubun", "board_view");
     	  request.setAttribute("dto", dto);
     	  request.setAttribute("imsiPage", imsiPage);
@@ -295,7 +270,7 @@ public class BoardController extends HttpServlet {
     	  page="/board/view.jsp";
     	  RequestDispatcher rd = request.getRequestDispatcher(page);
     	  rd.forward(request, response);
-    	  
+		} 
       }else if (url.indexOf("commentSave.do") != -1) {
           System.out.println("commentSave 왔음");
           String board_no_ = request.getParameter("no");

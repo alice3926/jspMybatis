@@ -14,7 +14,7 @@ public class ProductDTO {
 	private int nxtNo;
 	private String nxtSubject;
 	private int buy_counter;	
-	
+	private int memberNo;
 	public ProductDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -171,6 +171,20 @@ public class ProductDTO {
 
 	public void setBuy_counter(int buy_counter) {
 		this.buy_counter = buy_counter;
+	}
+
+
+
+
+	public int getMemberNo() {
+		return memberNo;
+	}
+
+
+
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
 	}
 	
 	
