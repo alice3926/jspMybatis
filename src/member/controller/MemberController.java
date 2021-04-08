@@ -348,29 +348,6 @@ public class MemberController extends HttpServlet {
 			out.close();
 
 		} else if (url.indexOf("sakjae.do") != -1) {
-//			String no_ = request.getParameter("no");
-//			if(no_==null||no_.length()==0) {
-//				response.setContentType("text/html;charset=utf-8");
-//				PrintWriter out = response.getWriter();
-//				out.println("<script>");
-//				out.println("alert('정상적인 접속이 아닙니다..')");
-//				out.println("location.href='"+path+"';");
-//				out.println("</script>");
-//				}
-//			no = Integer.parseInt(no_);
-//			
-//			HttpSession session = request.getSession();
-//			cookNo = (Integer)session.getAttribute("cookNo");
-//			System.out.println("cookNo"+cookNo+"??");
-//			if(cookNo==2) {
-//				response.setContentType("text/html;charset=utf-8");
-//				PrintWriter out = response.getWriter();
-//				out.println("<script>");
-//				out.println("alert('관리자는 삭제할수 없습니다.')");
-//				out.println("location.href='"+path+"';");
-//				out.println("</script>");
-//			}else {
-//			
 			dto = dao.getOne(no, search_option, search_data);
 
 			request.setAttribute("menu_gubun", "member_sakjae");

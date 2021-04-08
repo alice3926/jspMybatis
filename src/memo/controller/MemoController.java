@@ -211,7 +211,8 @@ public class MemoController extends HttpServlet {
 	    	out.close();
 		
 		}else if(url.indexOf("sakjaeProc.do")!=-1) {
-			String oneno_ = request.getParameter("oneno");
+			String oneno_ = request.getParameter("no");
+			System.out.println(oneno_);
 			int oneno = Integer.parseInt(oneno_);
 			
 			MemoDTO sakjaedto = dao.getOne(oneno);	
